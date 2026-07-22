@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <rect x="4" y="10" width="40" height="40" rx="10" fill="#FFC300"/>
+  <path d="M12 22c0-8 6-14 12-14s12 6 12 14-6 14-12 14-12-6-12-14z" fill="#FFF" opacity="0.25"/>
+  <path d="M16 22c0-4 3-7 8-7s8 3 8 7-3 7-8 7-8-3-8-7z" fill="#FFF" opacity="0.35"/>
+  <path d="M18 10h12l2 8h-16l2-8z" fill="#FFF" opacity="0.15"/>
+  <text x="58" y="38" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#231F20">美团</text>
+</svg>

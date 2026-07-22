@@ -1,0 +1,338 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="fc" id="floating-contact">
+  <div class="fc-panel" role="dialog" aria-label="在线咨询" aria-hidden="true">
+    <button class="fc-close" aria-label="关闭">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+
+    <p class="fc-title"><i></i>商务对接 · 微信</p>
+    <div class="fc-qr">
+      <img src="/wechat-qr-code.jpg" alt="鲲鹏助理微信二维码" width="580" height="580" loading="lazy" />
+    </div>
+    <p class="fc-caption">扫码添加「鲲鹏助理」</p>
+    <p class="fc-scope">培训 · 咨询 · 课程 · 会员群 · 产品合作</p>
+    <a class="fc-mail" href={`mailto:${site.email}`}>{site.email} ↗</a>
+  </div>
+
+  <button class="fc-btn" aria-label="扫码添加微信咨询" aria-expanded="false" aria-controls="fc-panel">
+    <svg class="icon-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z" />
+      <circle cx="9" cy="12" r="0.5" fill="currentColor" />
+      <circle cx="13" cy="12" r="0.5" fill="currentColor" />
+      <circle cx="17" cy="12" r="0.5" fill="currentColor" />
+    </svg>
+    <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+    <span class="fc-ring" aria-hidden="true"></span>
+  </button>
+
+  <span class="fc-tip" aria-hidden="true">扫码加微信</span>
+</div>
+
+<script>
+  const fc = document.getElementById('floating-contact');
+  if (fc) {
+    const btn = fc.querySelector('.fc-btn')!;
+    const panel = fc.querySelector('.fc-panel')!;
+
+    const setOpen = (open: boolean) => {
+      fc.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      panel.setAttribute('aria-hidden', String(!open));
+    };
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setOpen(!fc.classList.contains('open'));
+    });
+
+    // 任意 [data-open-wechat] 按钮都可唤起二维码面板
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as HTMLElement).closest('[data-open-wechat]');
+      if (trigger) {
+        e.preventDefault();
+        setOpen(true);
+      }
+    });
+
+    fc.querySelector('.fc-close')!.addEventListener('click', () => setOpen(false));
+
+    document.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest('[data-open-wechat]')) return; // 唤起按钮不触发外部关闭
+      if (!fc.contains(t)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+</script>
+
+<style>
+  .fc {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 110;
+  }
+
+  /* ---- 悬浮按钮 ---- */
+  .fc-btn {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #04121a;
+    background: var(--grad);
+    box-shadow: 0 12px 32px rgba(46, 139, 255, 0.35);
+    transition:
+      transform 0.3s cubic-bezier(0.2, 0.6, 0.2, 1),
+      box-shadow 0.3s;
+  }
+
+  .fc-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 16px 40px rgba(31, 222, 194, 0.4);
+  }
+
+  .fc-btn svg {
+    width: 26px;
+    height: 26px;
+    transition:
+      opacity 0.25s,
+      transform 0.25s;
+  }
+
+  .icon-close {
+    position: absolute;
+    opacity: 0;
+    transform: rotate(-45deg) scale(0.6);
+  }
+
+  .fc.open .icon-chat {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.6);
+  }
+
+  .fc.open .icon-close {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 呼吸扩散环 */
+  .fc-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(31, 222, 194, 0.55);
+    animation: ring 2.6s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .fc.open .fc-ring {
+    display: none;
+  }
+
+  @keyframes ring {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    70%,
+    100% {
+      transform: scale(1.65);
+      opacity: 0;
+    }
+  }
+
+  /* ---- 提示气泡 ---- */
+  .fc-tip {
+    position: absolute;
+    right: 68px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 9px 15px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(12, 17, 27, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    animation: tip-in 0.6s 1s cubic-bezier(0.2, 0.6, 0.2, 1) backwards;
+    transition:
+      opacity 0.25s,
+      transform 0.25s;
+  }
+
+  .fc-tip::before {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    transform: translateY(-50%) rotate(45deg);
+    background: inherit;
+    border-right: 1px solid var(--line-strong);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .fc.open .fc-tip {
+    opacity: 0;
+    transform: translateY(-50%) translateX(8px);
+    pointer-events: none;
+  }
+
+  @keyframes tip-in {
+    from {
+      opacity: 0;
+      transform: translateY(-50%) translateX(10px);
+    }
+  }
+
+  /* ---- 弹出面板 ---- */
+  .fc-panel {
+    position: absolute;
+    right: 0;
+    bottom: 72px;
+    width: min(300px, calc(100vw - 48px));
+    padding: 22px;
+    border: 1px solid var(--line-strong);
+    border-radius: 20px;
+    background: rgba(12, 17, 27, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    transform-origin: bottom right;
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+    pointer-events: none;
+    transition:
+      opacity 0.3s cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 0.3s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .fc.open .fc-panel {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .fc-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      color 0.25s,
+      background 0.25s;
+  }
+
+  .fc-close:hover {
+    color: var(--fg);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .fc-close svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .fc-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+
+  .fc-title i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grad);
+  }
+
+  .fc-qr {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    padding: 10px;
+  }
+
+  .fc-qr img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .fc-caption {
+    margin-top: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .fc-scope {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--faint);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  .fc-mail {
+    display: block;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    transition: color 0.25s;
+  }
+
+  .fc-mail:hover {
+    color: var(--cyan);
+  }
+
+  @media (max-width: 560px) {
+    .fc {
+      right: 16px;
+      bottom: 16px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fc-ring {
+      animation: none;
+      display: none;
+    }
+  }
+</style>

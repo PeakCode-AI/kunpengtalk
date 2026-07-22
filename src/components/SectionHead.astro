@@ -1,0 +1,17 @@
+---
+interface Props {
+  index: string;
+  title: string;
+  desc?: string;
+}
+
+const { index, title, desc } = Astro.props;
+---
+
+<div class="sec-head" data-reveal>
+  <div>
+    <span class="index">{index}</span>
+    <h2 set:html={title} />
+  </div>
+  {desc && <p class="desc">{desc}</p>}
+</div>

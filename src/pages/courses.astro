@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Courses from '../components/Courses.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<Layout title="精品课程 — 鲲鹏Talk" description="鲲鹏Talk 的系统课程：OPC 一人公司实战课（B站课堂在售）、Vibe Coding 系统实战课（录制中），更多课程持续上架。">
+  <Nav />
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="glow"></div>
+        <span class="watermark">COURSES</span>
+      </div>
+      <div class="container">
+        <p class="eyebrow" data-reveal>COURSES · 精品课程</p>
+        <h1 data-reveal style="--d:.1s">
+          把经验，<br /><span class="grad-text">打包成系统课程。</span>
+        </h1>
+        <p class="sub" data-reveal style="--d:.2s">
+          比短视频更系统，比文档更好懂，学完就能直接上手干活。<br />
+          OPC 已完结在售，Vibe Coding 录制中，更多课程持续上架。
+        </p>
+      </div>
+    </section>
+
+    <Courses />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    padding-top: var(--nav-h);
+  }
+
+  .page-hero {
+    position: relative;
+    padding: clamp(80px, 10vw, 130px) 0 0;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .glow {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 50%;
+    filter: blur(120px);
+    background: rgba(46, 139, 255, 0.14);
+    top: -18vw;
+    right: -10vw;
+  }
+
+  .watermark {
+    position: absolute;
+    top: 30%;
+    right: -2%;
+    font-size: clamp(70px, 11vw, 170px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(148, 163, 184, 0.09);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  h1 {
+    font-size: clamp(40px, 6.5vw, 80px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 26px 0 24px;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.9;
+  }
+</style>

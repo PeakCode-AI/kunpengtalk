@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Services from '../components/Services.astro';
+import Membership from '../components/Membership.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<Layout title="咨询服务 — 鲲鹏Talk" description="鲲鹏Talk 的企业服务：线下 AI 实战培训 ¥5,000/小时、一对一咨询 ¥3,000/小时，按需取用。">
+  <Nav />
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="glow"></div>
+        <span class="watermark">SERVICES</span>
+      </div>
+      <div class="container">
+        <p class="eyebrow" data-reveal>SERVICES · 咨询服务</p>
+        <h1 data-reveal style="--d:.1s">
+          把 AI 能力，<br /><span class="grad-text">装进你的团队。</span>
+        </h1>
+        <p class="sub" data-reveal style="--d:.2s">
+          线下培训、一对一咨询、付费会员群——按需取用。<br />
+          不讲概念，只做能落地的交付。
+        </p>
+      </div>
+    </section>
+
+    <Services />
+    <Membership />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    padding-top: var(--nav-h);
+  }
+
+  .page-hero {
+    position: relative;
+    padding: clamp(80px, 10vw, 130px) 0 0;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .glow {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 50%;
+    filter: blur(120px);
+    background: rgba(31, 222, 194, 0.12);
+    top: -18vw;
+    right: -10vw;
+  }
+
+  .watermark {
+    position: absolute;
+    top: 30%;
+    right: -2%;
+    font-size: clamp(70px, 11vw, 170px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(148, 163, 184, 0.09);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  h1 {
+    font-size: clamp(40px, 6.5vw, 80px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 26px 0 24px;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.9;
+  }
+</style>

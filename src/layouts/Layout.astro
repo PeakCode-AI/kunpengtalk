@@ -1,0 +1,68 @@
+---
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/700.css';
+import '../styles/global.css';
+import { site } from '../data/site';
+import FloatingContact from '../components/FloatingContact.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = `${site.name} — AI 自媒体工作室`, description = site.description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#05070c" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={new URL('/og.jpg', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <slot />
+    <FloatingContact />
+
+    <script>
+      // 滚动入场动画
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12 },
+      );
+      document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+
+      // 导航栏滚动状态
+      const nav = document.querySelector('.nav');
+      const onScroll = () => nav?.classList.toggle('scrolled', window.scrollY > 24);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // 移动端菜单
+      const toggle = document.querySelector('.nav-toggle');
+      toggle?.addEventListener('click', () => {
+        document.body.classList.toggle('menu-open');
+      });
+      document.querySelectorAll('.nav-links a').forEach((a) =>
+        a.addEventListener('click', () => document.body.classList.remove('menu-open')),
+      );
+    </script>
+  </body>
+</html>

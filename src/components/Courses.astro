@@ -1,0 +1,338 @@
+---
+import { courses } from '../data/site';
+
+const available = courses.filter((c) => c.status === 'available');
+const upcoming = courses.filter((c) => c.status === 'recording');
+---
+
+<section id="courses">
+  <div class="container">
+    <!-- 在售课程 -->
+    {available.map((c, i) => (
+      <article class="featured" data-reveal style={`--d:${i * 0.08}s`}>
+        <div class="info">
+          <div class="badges">
+            <span class="platform">{c.platform}</span>
+            <span class="state">已完结 · 长期有效</span>
+          </div>
+          <h3>{c.name}</h3>
+          {c.lecturer && <p class="lecturer">讲师：鲲鹏Talk · {c.lecturer}</p>}
+          <p class="desc">{c.desc}</p>
+
+          {(c.price || c.lessons) && (
+            <div class="meta">
+              <div class="price">
+                {c.price && <strong>{c.price}</strong>}
+                {c.lessons && <span>/ 共 {c.lessons} 课时</span>}
+              </div>
+              {c.students && <span class="students">{c.students} 人在学</span>}
+            </div>
+          )}
+
+          <ul class="highlights">
+            {c.highlights.map((h) => <li>{h}</li>)}
+          </ul>
+
+          <a href={c.url} target="_blank" rel="noopener" class="btn btn-primary">
+            立即学习 ↗
+          </a>
+        </div>
+
+        {c.outline && (
+          <div class="outline" aria-label="课程大纲">
+            <div class="outline-head">
+              <span>课程大纲</span>
+              {c.lessons && <span>{c.lessons} 课时</span>}
+            </div>
+            <ol>
+              {c.outline.map((l, j) => (
+                <li>
+                  <span class="no">{String(j + 1).padStart(2, '0')}</span>
+                  <span class="t">{l.title}</span>
+                  {l.trial && <em class="trial">试看</em>}
+                  <span class="d">{l.duration}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+      </article>
+    ))}
+
+    <!-- 录制中的课程 -->
+    {upcoming.map((c) => (
+      <article class="upcoming" data-reveal style="--d:.1s">
+        <span class="rec-badge"><i></i>录制中</span>
+        <div class="up-info">
+          <h3>{c.name}</h3>
+          <p>{c.desc}</p>
+        </div>
+        <ul class="highlights">
+          {c.highlights.map((h) => <li>{h}</li>)}
+        </ul>
+        <span class="soon">敬请期待 · 关注 B站获取上线通知</span>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  /* ---- 在售课程大卡 ---- */
+  .featured {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(32px, 4vw, 56px);
+    padding: clamp(32px, 4vw, 52px);
+    border-radius: calc(var(--radius) + 6px);
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--panel-2), var(--panel-2)) padding-box,
+      var(--grad) border-box;
+    box-shadow: 0 30px 80px rgba(46, 139, 255, 0.1);
+  }
+
+  .featured + .featured,
+  .featured + .upcoming,
+  .upcoming + .upcoming {
+    margin-top: 20px;
+  }
+
+  .badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .platform {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #04121a;
+    background: var(--grad);
+    border-radius: 999px;
+    padding: 5px 14px;
+  }
+
+  .state {
+    font-size: 12px;
+    color: var(--cyan);
+    border: 1px solid rgba(31, 222, 194, 0.4);
+    border-radius: 999px;
+    padding: 5px 14px;
+  }
+
+  .featured h3 {
+    font-size: clamp(24px, 2.8vw, 34px);
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 20px 0 10px;
+  }
+
+  .lecturer {
+    font-size: 13px;
+    color: var(--faint);
+    letter-spacing: 0.04em;
+  }
+
+  .desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+    margin: 18px 0 26px;
+  }
+
+  .meta {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    padding: 20px 0;
+    border-block: 1px solid var(--line);
+  }
+
+  .price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .price strong {
+    font-size: clamp(34px, 4vw, 46px);
+    font-weight: 700;
+    line-height: 1;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .price span {
+    font-size: 14px;
+    color: var(--faint);
+  }
+
+  .students {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px 0 30px;
+  }
+
+  .highlights li {
+    font-size: 13px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 14px;
+  }
+
+  /* ---- 大纲面板 ---- */
+  .outline {
+    align-self: center;
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: #070a10;
+    overflow: hidden;
+  }
+
+  .outline-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 22px;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .outline ol {
+    list-style: none;
+  }
+
+  .outline li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 22px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.07);
+    transition: background 0.25s;
+  }
+
+  .outline li:last-child {
+    border-bottom: 0;
+  }
+
+  .outline li:hover {
+    background: rgba(46, 139, 255, 0.06);
+  }
+
+  .outline .no {
+    font-size: 12px;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--faint);
+    flex-shrink: 0;
+  }
+
+  .outline .t {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .trial {
+    flex-shrink: 0;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 600;
+    color: #04121a;
+    background: var(--grad);
+    border-radius: 6px;
+    padding: 2px 8px;
+  }
+
+  .outline .d {
+    flex-shrink: 0;
+    font-size: 12px;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- 录制中 ---- */
+  .upcoming {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 40px);
+    flex-wrap: wrap;
+    padding: 30px clamp(28px, 3vw, 44px);
+    border: 1px dashed var(--line-strong);
+    border-radius: calc(var(--radius) + 6px);
+    background: rgba(12, 17, 27, 0.5);
+  }
+
+  .rec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #ff6b6b;
+    flex-shrink: 0;
+  }
+
+  .rec-badge i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff6b6b;
+    animation: blink 1.4s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
+
+  .up-info {
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .up-info h3 {
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .up-info p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .upcoming .highlights {
+    margin: 0;
+  }
+
+  .soon {
+    font-size: 13px;
+    color: var(--faint);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 900px) {
+    .featured {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

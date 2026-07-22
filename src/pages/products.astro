@@ -1,0 +1,412 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+import { products, vibebaseTerminals, vibepayFeatures, vibepaySteps } from '../data/site';
+
+const vibebase = products.find((p) => p.key === 'vibebase')!;
+const vibepay = products.find((p) => p.key === 'vibepay')!;
+
+const terminalIcons: Record<string, string> = {
+  dashboard:
+    '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+  phone: '<rect x="7" y="2.5" width="10" height="19" rx="3"/><path d="M10.5 18.5h3"/>',
+  grid: '<rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/>',
+};
+---
+
+<Layout title="产品服务 — 鲲鹏Talk" description="鲲鹏Talk 自研产品：Vibebase 全终端 AI 对话产品体系、VibePay 个人收款免签约解决方案，均已上架。">
+  <Nav />
+  <main>
+    <section class="page-hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="glow"></div>
+        <span class="watermark">PRODUCTS</span>
+      </div>
+      <div class="container">
+        <p class="eyebrow" data-reveal>PRODUCTS · 产品服务</p>
+        <h1 data-reveal style="--d:.1s">
+          自己趁手的工具，<br /><span class="grad-text">做成了产品。</span>
+        </h1>
+        <p class="sub" data-reveal style="--d:.2s">
+          把做内容、做项目时沉淀的能力，打磨成可直接上架运营的产品。<br />
+          两款产品均已上架，即买即用。
+        </p>
+      </div>
+    </section>
+
+    <!-- Vibebase -->
+    <section class="product-block">
+      <div class="container block-grid">
+        <div class="info" data-reveal>
+          <div class="badges">
+            <span class="status">{vibebase.status}</span>
+          </div>
+          <h2>{vibebase.name}</h2>
+          <p class="tagline">{vibebase.tagline}</p>
+          <p class="desc">{vibebase.desc}</p>
+          <ul class="points">
+            {vibebase.points.map((pt) => <li>{pt}</li>)}
+          </ul>
+          <a href={vibebase.url} target="_blank" rel="noopener" class="btn btn-primary">
+            访问 {vibebase.name} ↗
+          </a>
+        </div>
+
+        <div class="visual" data-reveal style="--d:.12s">
+          <div class="terminals">
+            {vibebaseTerminals.map((t) => (
+              <div class="terminal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" set:html={terminalIcons[t.icon]} />
+                <strong>{t.name}</strong>
+                <span>{t.en}</span>
+              </div>
+            ))}
+          </div>
+          <p class="db-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.66 3.58 3 8 3s8-1.34 8-3v-13"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>
+            四端共享一套数据库
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VibePay -->
+    <section class="product-block alt">
+      <div class="container block-grid reverse">
+        <div class="info" data-reveal>
+          <div class="badges">
+            <span class="status">{vibepay.status}</span>
+          </div>
+          <h2>{vibepay.name}</h2>
+          <p class="tagline">{vibepay.tagline}</p>
+          <p class="desc">{vibepay.desc}</p>
+
+          <ol class="steps">
+            {vibepaySteps.map((s, i) => (
+              <li>
+                <span class="sno">0{i + 1}</span>
+                <div>
+                  <strong>{s.name}</strong>
+                  <p>{s.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <a href={vibepay.url} target="_blank" rel="noopener" class="btn btn-primary">
+            访问 {vibepay.name} ↗
+          </a>
+        </div>
+
+        <div class="visual" data-reveal style="--d:.12s">
+          <div class="features">
+            {vibepayFeatures.map((f) => (
+              <div class="feature">
+                <strong>{f.name}</strong>
+                <p>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    padding-top: var(--nav-h);
+  }
+
+  /* ---- 页头 ---- */
+  .page-hero {
+    position: relative;
+    padding: clamp(80px, 10vw, 130px) 0 clamp(32px, 4vw, 56px);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .glow {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 50%;
+    filter: blur(120px);
+    background: rgba(46, 139, 255, 0.16);
+    top: -18vw;
+    right: -10vw;
+  }
+
+  .watermark {
+    position: absolute;
+    top: 30%;
+    right: -2%;
+    font-size: clamp(70px, 11vw, 170px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(148, 163, 184, 0.09);
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  h1 {
+    font-size: clamp(40px, 6.5vw, 80px);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 26px 0 24px;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.9;
+  }
+
+  /* ---- 产品区块 ---- */
+  .product-block {
+    padding: clamp(48px, 6vw, 80px) 0;
+  }
+
+  .product-block.alt {
+    background: rgba(255, 255, 255, 0.015);
+    border-block: 1px solid var(--line);
+  }
+
+  .block-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .block-grid.reverse .info {
+    order: 2;
+  }
+
+  .block-grid.reverse .visual {
+    order: 1;
+  }
+
+  .badges {
+    display: flex;
+    gap: 10px;
+  }
+
+  .status {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #04121a;
+    background: var(--grad);
+    border-radius: 999px;
+    padding: 5px 14px;
+  }
+
+  h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 18px 0 6px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+  }
+
+  .tagline {
+    font-size: clamp(17px, 1.8vw, 21px);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+    margin-bottom: 26px;
+  }
+
+  .points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .points li {
+    font-size: 13px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 14px;
+  }
+
+  /* ---- Vibebase 四端 ---- */
+  .terminals {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .terminal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 26px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    transition:
+      transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+      border-color 0.35s;
+  }
+
+  .terminal:hover {
+    transform: translateY(-4px);
+    border-color: rgba(31, 222, 194, 0.5);
+  }
+
+  .terminal svg {
+    width: 32px;
+    height: 32px;
+    color: var(--cyan);
+    margin-bottom: 10px;
+  }
+
+  .terminal strong {
+    font-size: 16px;
+  }
+
+  .terminal span {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--faint);
+  }
+
+  .db-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 14px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .db-note svg {
+    width: 20px;
+    height: 20px;
+    color: var(--blue);
+  }
+
+  /* ---- VibePay 功能 ---- */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .feature {
+    padding: 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    transition:
+      transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+      border-color 0.35s;
+  }
+
+  .feature:hover {
+    transform: translateY(-4px);
+    border-color: var(--line-strong);
+  }
+
+  .feature strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .feature p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ---- VibePay 流程 ---- */
+  .steps {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+
+  .steps li {
+    display: flex;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  }
+
+  .steps li:last-child {
+    border-bottom: 0;
+  }
+
+  .sno {
+    font-size: 20px;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(148, 163, 184, 0.5);
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+
+  .steps strong {
+    font-size: 15px;
+  }
+
+  .steps p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 900px) {
+    .block-grid,
+    .block-grid.reverse {
+      grid-template-columns: 1fr;
+    }
+
+    .block-grid.reverse .info {
+      order: 1;
+    }
+
+    .block-grid.reverse .visual {
+      order: 2;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .features,
+    .terminals {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

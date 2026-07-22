@@ -1,0 +1,140 @@
+---
+import { site, platforms } from '../data/site';
+
+const year = new Date().getFullYear();
+const base = Astro.url.pathname === '/' ? '' : '/';
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <span class="wordmark">鲲鹏<em>Talk</em></span>
+        <p>{site.slogan}</p>
+      </div>
+
+      <div class="cols">
+        <div class="col">
+          <h4>产品</h4>
+          <a href="/products">产品总览</a>
+          <a href="https://vibebase.vibeadmin.cn/" target="_blank" rel="noopener">Vibebase</a>
+          <a href="https://pay.vibeadmin.cn/" target="_blank" rel="noopener">VibePay</a>
+        </div>
+        <div class="col">
+          <h4>服务</h4>
+          <a href="/services">线下培训 · 咨询</a>
+          <a href="/services#membership">会员群</a>
+          <a href="/courses">精品课程</a>
+          <a href="/video">视频定制</a>
+        </div>
+        <div class="col">
+          <h4>内容</h4>
+          <a href={`${base}#content`}>内容专栏</a>
+          <a href={`${base}#platforms`}>平台矩阵</a>
+          <a href="/opensource">开源项目</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="platforms-line">
+      {platforms.map((p) => <a href={p.url}>{p.name}</a>)}
+    </div>
+
+    <div class="bottom">
+      <span>© {year} {site.name} · {site.nameEn}</span>
+      <span>{site.motto}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding: 64px 0 36px;
+    background: var(--bg-2);
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .wordmark {
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .wordmark em {
+    font-style: normal;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .brand p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 320px;
+  }
+
+  .cols {
+    display: flex;
+    gap: clamp(40px, 6vw, 88px);
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .col h4 {
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    color: var(--faint);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  .col a {
+    font-size: 15px;
+    color: var(--muted);
+    transition: color 0.25s;
+  }
+
+  .col a:hover {
+    color: var(--fg);
+  }
+
+  .platforms-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin: 48px 0 32px;
+    padding: 28px 0;
+    border-block: 1px solid var(--line);
+  }
+
+  .platforms-line a {
+    font-size: 14px;
+    color: var(--faint);
+    transition: color 0.25s;
+  }
+
+  .platforms-line a:hover {
+    color: var(--cyan);
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--faint);
+  }
+</style>

@@ -1,0 +1,141 @@
+---
+const entries = [
+  {
+    href: '/products',
+    no: 'P1',
+    title: '产品服务',
+    desc: 'Vibebase 全终端 AI 产品体系 · VibePay 个人收款方案，均已上架。',
+  },
+  {
+    href: '/services',
+    no: 'S2',
+    title: '咨询服务',
+    desc: '线下企业培训、一对一咨询与付费会员群，按需取用。',
+  },
+  {
+    href: '/courses',
+    no: 'C3',
+    title: '精品课程',
+    desc: 'OPC 一人公司课在售，Vibe Coding 录制中，更多课程陆续上架。',
+  },
+  {
+    href: '/opensource',
+    no: 'O4',
+    title: '开源项目',
+    desc: '6 个开源项目，1.9k+ 社区 Star，视频里的代码全部可拿。',
+  },
+];
+---
+
+<section class="entries">
+  <div class="container">
+    <p class="eyebrow" data-reveal>我们提供什么</p>
+    <div class="grid">
+      {entries.map((e, i) => (
+        <a href={e.href} class="entry" data-reveal style={`--d:${i * 0.08}s`}>
+          <span class="no">{e.no}</span>
+          <h3>{e.title}</h3>
+          <p>{e.desc}</p>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .entries {
+    padding-top: 0;
+  }
+
+  .eyebrow {
+    margin-bottom: 32px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .entry {
+    position: relative;
+    padding: 36px 32px 32px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: linear-gradient(170deg, var(--panel) 0%, rgba(12, 17, 27, 0.4) 100%);
+    overflow: hidden;
+    transition:
+      transform 0.4s cubic-bezier(0.2, 0.6, 0.2, 1),
+      border-color 0.4s;
+  }
+
+  .entry::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(360px 200px at 90% -10%, rgba(46, 139, 255, 0.14), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .entry:hover {
+    transform: translateY(-6px);
+    border-color: rgba(31, 222, 194, 0.5);
+  }
+
+  .entry:hover::before {
+    opacity: 1;
+  }
+
+  .no {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(148, 163, 184, 0.5);
+  }
+
+  h3 {
+    font-size: clamp(22px, 2.2vw, 28px);
+    font-weight: 700;
+    margin: 16px 0 10px;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+    padding-right: 28px;
+  }
+
+  .go {
+    position: absolute;
+    right: 28px;
+    bottom: 28px;
+    font-size: 22px;
+    color: var(--cyan);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition:
+      opacity 0.35s,
+      transform 0.35s;
+  }
+
+  .entry:hover .go {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 1100px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

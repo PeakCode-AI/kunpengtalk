@@ -1,0 +1,9 @@
+services:
+  kunpengtalk:
+    build: .
+    container_name: kunpengtalk
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    environment:
+      - TZ=Asia/Shanghai
