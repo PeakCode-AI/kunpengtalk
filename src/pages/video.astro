@@ -7,7 +7,7 @@ import SectionHead from '../components/SectionHead.astro';
 import { videoDeals, writingDeals, platforms } from '../data/site';
 ---
 
-<Layout title="视频定制 — 鲲鹏Talk" description="鲲鹏Talk 商单合作：定制视频、植入视频（优惠价与B站同价）、公众号约稿、小红书/公众号图文，全部全平台投放。">
+<Layout title="视频定制 — 鲲鹏Talk" description="鲲鹏Talk 商单合作：定制视频、植入视频、公众号约稿、小红书/公众号图文，全部全平台投放。">
   <Nav />
   <main>
     <section class="page-hero">
@@ -21,7 +21,7 @@ import { videoDeals, writingDeals, platforms } from '../data/site';
           让好内容，<br /><span class="grad-text">为你的品牌说话。</span>
         </h1>
         <p class="sub" data-reveal style="--d:.2s">
-          商单报价透明，{platforms.map((p) => p.name).join(' · ')} 全平台投放。<br />
+          商单合作灵活，{platforms.map((p) => p.name).join(' · ')} 全平台投放。<br />
           合作流程简单，确认需求后一周内出片。
         </p>
       </div>
@@ -30,9 +30,9 @@ import { videoDeals, writingDeals, platforms } from '../data/site';
     <section id="video-deals">
       <div class="container">
         <SectionHead
-          index="01 / 视频报价"
+          index="01 / 视频合作"
           title="视频商单"
-          desc="当前优惠价与 B站商单同价，均含全平台投放。"
+          desc="均含全平台投放。"
         />
 
         <div class="grid">
@@ -61,7 +61,7 @@ import { videoDeals, writingDeals, platforms } from '../data/site';
         <SectionHead
           index="02 / 文字与图文"
           title="约稿与图文"
-          desc="深度文字稿按单计费，图文单发轻量快速。"
+          desc="深度文字稿和图文单发，按需合作。"
         />
 
         <div class="grid">
@@ -82,7 +82,7 @@ import { videoDeals, writingDeals, platforms } from '../data/site';
         </div>
 
         <p class="note" data-reveal>
-          以上报价均含全平台投放；排期、批量打包与其他合作形式，请添加鲲鹏助理微信详谈。
+          以上合作均含全平台投放；排期、批量打包与其他合作形式，请添加鲲鹏助理微信详谈。
         </p>
       </div>
     </section>

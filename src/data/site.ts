@@ -289,7 +289,7 @@ export const videoDeals = [
     desc: 'UP 主创作的专为客户营销诉求定制的商单，全平台投放。',
     price: '咨询',
     original: '',
-    promo: '限时优惠 · 与 B站商单同价',
+    promo: '详情微信咨询',
     points: ['专为客户营销诉求定制', '全平台同步投放'],
   },
   {
@@ -299,7 +299,7 @@ export const videoDeals = [
     desc: 'UP 主创作的可部分植入广告的商单，支持植入多个客户的营销内容，全平台投放。',
     price: '咨询',
     original: '',
-    promo: '限时优惠 · 与 B站商单同价',
+    promo: '详情微信咨询',
     points: ['支持多个客户植入', '全平台同步投放'],
   },
 ];
@@ -310,16 +310,16 @@ export const writingDeals = [
     key: 'wechat-article',
     name: '约稿 · 微信公众号文章',
     desc: '深度文字稿，公众号首发，全平台投放。',
-    price: '¥5,000',
-    unit: '/ 单',
+    price: '咨询',
+    unit: '',
     points: ['公众号首发', '全平台投放'],
   },
   {
     key: 'image-post',
     name: '图文单发 · 小红书 / 公众号图文',
     desc: '图文内容单条发布，轻量快速。',
-    price: '¥500',
-    unit: '/ 条',
+    price: '咨询',
+    unit: '',
     points: ['小红书 / 公众号图文', '单条发布'],
   },
 ];
